@@ -62,4 +62,25 @@ public class SpecializationController {
 		return "redirect:all";
 	}
 
+	/**
+	 * 5.fetch data to edit operation
+	 */
+	@GetMapping("/edit")
+	public String showEditPage(@RequestParam Long id, Model model) {
+		Specialization spec = service.getOneSpecializatio(id);
+		model.addAttribute("specialization", spec);
+		return "SpecializationEdit";
+	}
+	
+	/**
+	 * 6.update data based on id
+	 */
+	@PostMapping("/update")
+	public String updateData(@ModelAttribute Specialization specialization, RedirectAttributes attributes) {
+		service.updateSpecialization(specialization);
+		String message="Record " +specialization.getId()+ " is updated successfully!";
+		attributes.addAttribute("message", message);
+		return "redirect:all";
+	}
+
 }
