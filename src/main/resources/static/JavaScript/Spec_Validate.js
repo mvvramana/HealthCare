@@ -24,8 +24,27 @@ $(document).ready(function() {
 			$("#specCodeError").html("*<b>Code</b> must be 4-10 chars");
 			$("#specCodeError").css("color", "red");
 		} else {
-			$("#specCodeError").hide();
-			specCodeError = true;
+			var id = 0;//for register
+			if ($("#id").val() != undefined) {
+				specCodeError = true;
+				id = $("#id").val();
+			}
+			$.ajax({
+				url: 'checkCode',
+				data: { "code": val, "id": id },
+				success: function(resTxt) {
+					if (resTxt != '') {
+						$("#specCodeError").show();
+						$("#specCodeError").html(resTxt);
+						$("#specCodeError").css('color', 'red');
+						specCodeError = false;
+					} else {
+						$("#specCodeError").hide();
+						specCodeError = true;
+					}
+				}
+			});
+
 		}
 		return specCodeError;
 	}
@@ -43,8 +62,26 @@ $(document).ready(function() {
 			$("#specNameError").html("*<b>Name</b> must be 4-50 chars");
 			$("#specNameError").css("color", "red");
 		} else {
-			$("#specNameError").hide();
-			specNameError = true;
+			var id = 0;//for register
+			if ($("#id").val() != undefined) {
+				specCodeError = true;
+				id = $("#id").val();
+			}
+			$.ajax({
+				url: 'checkName',
+				data: { "name": val, "id": id },
+				success: function(resTxt) {
+					if (resTxt != "") {
+						$("#specNameError").show();
+						$("#specNameError").html(resTxt);
+						$("#specNameError").css("color", "red");
+						specNameError = false;
+					} else {
+						$("#specNameError").hide();
+						specNameError = true;
+					}
+				}
+			});
 		}
 		return specNameError;
 	}
